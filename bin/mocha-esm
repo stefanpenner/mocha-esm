@@ -1,4 +1,22 @@
-#!/usr/bin/env sh
+#!/usr/bin/env node
+"use strict";
 
-BASEDIR=$( dirname "$0" )
-node --experimental-modules $BASEDIR/../index.mjs "$@"
+const execa = require('execa');
+const path = require('path');
+const args = process.argv.slice();
+const node = args.shift();
+const thisFile = args.shift();
+
+const prefixArgs = [
+  '--experimental-modules',
+  `${path.join(__dirname, '/../index.mjs')}`
+];
+
+if (args[0] === 'inspect' || args[0] === 'inspect-brk') {
+  prefixArgs.unshift(args.shift());
+}
+
+execa(node, prefixArgs.concat(args), {
+  stdio: 'inherit'
+}).then(_ => process.exit(0),
+        e => process.exit(1));
