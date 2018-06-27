@@ -21,6 +21,6 @@
     "chai": "^4.1.2"
   },
   "scripts": {
-    "test": "./bin/mocha-esm ./test"
+    "test": "node ./bin/mocha-esm ./test.mjs"
   }
 }

@@ -1,6 +1,7 @@
 # mocha-esm
-
 [![Build Status](https://travis-ci.org/stefanpenner/mocha-esm.svg?branch=master)](https://travis-ci.org/stefanpenner/mocha-esm)
+[![Build status](https://ci.appveyor.com/api/projects/status/als39i0vc93ulvkm/branch/master?svg=true)](https://ci.appveyor.com/project/stefanpenner/mocha-esm/branch/master)
+
 So I was playing around with esm (`.mjs`) files and realized, I couldn't get
 mocha running nicely. So this happened.
 
