@@ -1,0 +1,26 @@
+{
+  "name": "mocha-esm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": {
+    "mocha-esm": "./bin/mocha-esm"
+  },
+  "files": [
+    "bin/mocha-esm",
+    "index.mjs"
+  ],
+  "repository": "git@github.com:stefanpenner/mocha-esm",
+  "author": "Stefan Penner <stefan.penner@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mocha": "^5.2.0",
+    "promise-map-series": "^0.2.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "execa": "^0.10.0"
+  },
+  "scripts": {
+    "test": "./bin/mocha-esm ./test"
+  }
+}
