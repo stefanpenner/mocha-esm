@@ -9,6 +9,9 @@ export function handleAbsolute(moduleId, root) {
   if (path.isAbsolute(moduleId)) {
     return moduleId;
   } else {
+    console.log('root:', root);
+    console.log('moduleId:', moduleId);
+
     return path.join(root, moduleId);
   }
 }
