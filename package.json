@@ -3,7 +3,8 @@
   "version": "1.0.2",
   "main": "index.js",
   "bin": {
-    "mocha-esm": "./bin/mocha-esm"
+    "mocha-esm": "./bin/mocha-esm",
+    "mocha": "./bin/mocha-esm"
   },
   "files": [
     "bin/mocha-esm",
