@@ -16,12 +16,15 @@
   "dependencies": {
     "mocha": "^5.2.0",
     "execa": "^0.10.0",
+    "minimist": "^1.2.0",
+    "mocha": "^5.2.0",
     "promise-map-series": "^0.2.3"
   },
   "devDependencies": {
     "chai": "^4.1.2"
   },
   "scripts": {
-    "test": "./bin/mocha-esm ./test"
+    "test": "./bin/mocha-esm ./test",
+    "test:debug": "./bin/mocha-esm inspect ./test"
   }
 }
