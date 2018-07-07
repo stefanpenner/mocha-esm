@@ -3,7 +3,7 @@ import execa from 'execa';
 
 import {
   handleAbsolute,
-  extractArgs
+  normalizeOptionAliases
 } from './index';
 import path from 'path';
 
@@ -18,17 +18,22 @@ describe('handleAbsolute', function() {
   });
 });
 
-describe('extractArgs', function() {
+describe('normalizeOptionAliases', function() {
   it('works', function() {
-    expect(extractArgs(['/foo/bar/bin/node', 'this-file', 'a1', 'a2', '...', 'an'])).to.eql({
-      args: ['a1', 'a2', '...', 'an'],
-      bin: '/foo/bar/bin/node',
-      current: 'this-file'
-    })
+    expect(normalizeOptionAliases({})).to.eql({});
+    expect(normalizeOptionAliases({})).to.not.equal({});
+    expect(normalizeOptionAliases({ g: 'foo'})).to.not.equal({ grep: 'foo'});
+    expect(normalizeOptionAliases({ i: 'foo'})).to.not.equal({ invert: 'foo'});
+    expect(normalizeOptionAliases({ i: 'foo', apple: [{ a:1 }]})).to.not.equal({ invert: 'foo', apple: [{ a: 1}]});
+    expect(normalizeOptionAliases({ _: ['a'] })).to.not.equal({ });
   });
 });
 
-describe('mocha-esm', function() {
+describe('runner', function() {
+  // TODO: if problems arise, lets add tests here
+});
+
+describe('acceptance', function() {
   it('works', async function() {
     let child = await execa('./bin/mocha-esm', ['fixtures/a', 'fixtures/b']);
 
@@ -48,5 +53,17 @@ describe('mocha-esm', function() {
    } catch (e) {
      expect(e.message).to.contain('I WILL FAIL')
    }
+  });
+
+  it('greps', async function() {
+    let child = await execa('./bin/mocha-esm', ['--grep', 'works A', 'fixtures/a']);
+    expect(child.stdout).to.contain('works A');
+    expect(child.stdout).to.not.contain('works B');
+  });
+
+  it('greps invert', async function() {
+    let child = await execa('./bin/mocha-esm', ['-i', '--grep', 'works A', 'fixtures/a']);
+    expect(child.stdout).to.not.contain('works A');
+    expect(child.stdout).to.contain('works B');
   });
 });
