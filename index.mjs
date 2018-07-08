@@ -42,16 +42,14 @@ export class Runner {
   async importModule(module) {
     const moduleId = handleAbsolute(module, this.root);
     this.mocha.suite.emit('pre-require', global, moduleId, this.mocha);
-    let failed = true;
 
     try {
       await import(moduleId);
-      failed =  false;
-    } finally {
-      if (failed) {
-        // nodes current error messages arent useful yet
-        console.error(`the module: '${moduleId}' failed to import.`);
+    } catch (e) {
+      if (e !== null && typeof e === 'object' && e.name === 'SyntaxError') {
+        e.message = `\n file: '${moduleId}'\n ${e.message}`;
       }
+      throw e;
     }
 
     this.mocha.suite.emit('require', null, moduleId, this.mocha);
